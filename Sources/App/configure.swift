@@ -8,6 +8,10 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     try services.register(FluentPostgreSQLProvider())
     try services.register(AuthenticationProvider())
 
+    //Listen on all network interfaces. (not only localhost)
+    let serverConfiure = NIOServerConfig.default(hostname: "0.0.0.0", port: 8080)
+    services.register(serverConfiure)
+
     // Register routes to the router
     let router = EngineRouter.default()
     try routes(router)
