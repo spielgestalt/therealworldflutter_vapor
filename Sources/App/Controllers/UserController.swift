@@ -1,6 +1,6 @@
 import Crypto
 import Vapor
-import FluentSQLite
+import FluentPostgreSQL
 
 /// Creates new users and logs them in.
 final class UserController {
@@ -58,7 +58,7 @@ struct CreateUserRequest: Content {
 struct UserResponse: Content {
     /// User's unique identifier.
     /// Not optional since we only return users that exist in the DB.
-    var id: Int
+    var id: UUID
     
     /// User's full name.
     var name: String

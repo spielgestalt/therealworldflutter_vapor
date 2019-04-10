@@ -1,8 +1,8 @@
 import Vapor
-import FluentSQLite
+import FluentPostgreSQL
 
 /// Simple todo-list controller.
-final class TodoController {
+/*final class TodoController {
     /// Returns a list of all todos for the auth'd user.
     func index(_ req: Request) throws -> Future<[Todo]> {
         // fetch auth'd user
@@ -51,3 +51,4 @@ struct CreateTodoRequest: Content {
     /// Todo title.
     var title: String
 }
+*/

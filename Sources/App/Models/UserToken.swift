@@ -1,10 +1,10 @@
 import Authentication
 import Crypto
-import FluentSQLite
+import FluentPostgreSQL
 import Vapor
 
 /// An ephermal authentication token that identifies a registered user.
-final class UserToken: SQLiteModel {
+final class UserToken: PostgreSQLUUIDModel {
     /// Creates a new `UserToken` for a given user.
     static func create(userID: User.ID) throws -> UserToken {
         // generate a random 128-bit, base64-encoded string.
@@ -17,7 +17,7 @@ final class UserToken: SQLiteModel {
     static var deletedAtKey: TimestampKey? { return \.expiresAt }
     
     /// UserToken's unique identifier.
-    var id: Int?
+    var id: UUID?
     
     /// Unique token string.
     var string: String
@@ -29,7 +29,7 @@ final class UserToken: SQLiteModel {
     var expiresAt: Date?
     
     /// Creates a new `UserToken`.
-    init(id: Int? = nil, string: String, userID: User.ID) {
+    init(id: UUID? = nil, string: String, userID: User.ID) {
         self.id = id
         self.string = string
         // set token to expire after 5 hours
@@ -64,8 +64,8 @@ extension UserToken: Token {
 /// Allows `UserToken` to be used as a Fluent migration.
 extension UserToken: Migration {
     /// See `Migration`.
-    static func prepare(on conn: SQLiteConnection) -> Future<Void> {
-        return SQLiteDatabase.create(UserToken.self, on: conn) { builder in
+    static func prepare(on conn: PostgreSQLConnection) -> Future<Void> {
+        return PostgreSQLDatabase.create(UserToken.self, on: conn) { builder in
             builder.field(for: \.id, isIdentifier: true)
             builder.field(for: \.string)
             builder.field(for: \.userID)
