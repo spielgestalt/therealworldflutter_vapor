@@ -7,6 +7,7 @@
 
 import Vapor
 import FluentPostgreSQL
+import Pagination
 
 struct Page {
     var id: UUID?
@@ -40,3 +41,4 @@ extension Page: Migration {
     }
 }
 extension Page: Parameter {}
+extension Page: Paginatable {}

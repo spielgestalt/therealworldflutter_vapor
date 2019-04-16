@@ -12,9 +12,10 @@ let package = Package(
         
         // 👤 Authentication and Authorization layer for Fluent.
         .package(url: "https://github.com/vapor/auth.git", from: "2.0.0"),
+        .package(url: "https://github.com/vapor-community/pagination.git", from: "1.0.9"),
     ],
     targets: [
-        .target(name: "App", dependencies: ["Authentication", "FluentPostgreSQL", "Vapor"]),
+        .target(name: "App", dependencies: ["Authentication", "FluentPostgreSQL", "Vapor", "Pagination"]),
         .target(name: "Run", dependencies: ["App"]),
         .testTarget(name: "AppTests", dependencies: ["App"])
     ]

@@ -9,7 +9,7 @@ public func routes(_ router: Router) throws {
     
     // basic / password auth protected routes
     let basic = router.grouped(User.basicAuthMiddleware(using: BCryptDigest()))
-    basic.post("login", use: userController.login)
+    basic.post("api/login", use: userController.login)
 
     let pageController = PageController()
     try router.register(collection: pageController)

@@ -6,6 +6,7 @@
 //
 
 import Vapor
+import  Pagination
 
 struct PageController: RouteCollection {
     func boot(router: Router) throws {
@@ -26,11 +27,12 @@ struct PageController: RouteCollection {
             }
     }
 
-    func getAllHandler(_ req: Request) throws -> Future<[Page]> {
+    func getAllHandler(_ req: Request) throws -> Future<Paginated<Page>> {
         _ = try req.requireAuthenticated(User.self)
-        return Page.query(on: req).decode(Page.self).all().map{ pages in
+        return try Page.query(on: req).paginate(for: req)
+        /*return Page.query(on: req).decode(Page.self).all().map{ pages in
             return pages
-        }
+        }*/
     }
 
     func getOneHandler(_ req: Request) throws -> Future<Page> {
